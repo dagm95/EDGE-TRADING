@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects Management Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="projects.css">
+</head>
+<body>
+<div class="container my-4">
+    <h2 class="mb-4">Projects</h2>
+    <!-- Search & Filter Bar -->
+    <form class="row g-2 mb-3">
+        <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Search by project name...">
+        </div>
+        <div class="col-md-2">
+            <select class="form-select">
+                <option value="">All Statuses</option>
+                <option>Pending</option>
+                <option>In Progress</option>
+                <option>Completed</option>
+                <option>On Hold</option>
+                <option>Cancelled</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <select class="form-select">
+                <option value="">All Stores</option>
+                <option>Main Warehouse</option>
+                <option>Secondary Store</option>
+                <option>North Depot</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="date" class="form-control" placeholder="Start Date">
+        </div>
+        <div class="col-md-3 text-end">
+            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addProjectModal">Add Project</button>
+        </div>
+    </form>
+    <!-- Projects Table -->
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Projects List
+        </div>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Store</th>
+                        <th>Status</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Manager</th>
+                        <th>Last Updated</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Store Renovation</td>
+                        <td>Main Warehouse</td>
+                        <td><span class="badge bg-info text-dark">In Progress</span></td>
+                        <td>2025-10-01</td>
+                        <td>2025-11-10</td>
+                        <td>Fatima Noor</td>
+                        <td>2025-10-05</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewProjectModal">View</button>
+                            <button class="btn btn-primary btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>New Shelving Install</td>
+                        <td>Secondary Store</td>
+                        <td><span class="badge bg-success">Completed</span></td>
+                        <td>2025-08-01</td>
+                        <td>2025-08-28</td>
+                        <td>Ali Hassan</td>
+                        <td>2025-08-28</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewProjectModal">View</button>
+                            <button class="btn btn-primary btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Security Camera Upgrade</td>
+                        <td>North Depot</td>
+                        <td><span class="badge bg-warning text-dark">On Hold</span></td>
+                        <td>2025-09-10</td>
+                        <td>2025-11-01</td>
+                        <td>Sara Ali</td>
+                        <td>2025-09-20</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewProjectModal">View</button>
+                            <button class="btn btn-primary btn-sm">Edit</button>
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div class="modal fade" id="addProjectModal" tabindex="-1" aria-labelledby="addProjectLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h5 class="modal-title" id="addProjectLabel">Add New Project</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-2">
+                <label class="form-label">Project Name</label>
+                <input type="text" class="form-control" required>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Store</label>
+                <select class="form-select" required>
+                  <option>Main Warehouse</option>
+                  <option>Secondary Store</option>
+                  <option>North Depot</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" rows="2"></textarea>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Status</label>
+                <select class="form-select" required>
+                  <option>Pending</option>
+                  <option>In Progress</option>
+                  <option>Completed</option>
+                  <option>On Hold</option>
+                  <option>Cancelled</option>
+                </select>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Start Date</label>
+                <input type="date" class="form-control" required>
+              </div>
+              <div class="mb-2">
+                <label class="form-label">End Date</label>
+                <input type="date" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Manager</label>
+                <input type="text" class="form-control">
+              </div>
+              <div class="mb-2">
+                <label class="form-label">Assign Team</label>
+                <input type="text" class="form-control" placeholder="Ali, Omar, Sara">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Add Project</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Project Modal -->
+    <div class="modal fade" id="viewProjectModal" tabindex="-1" aria-labelledby="viewProjectLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewProjectLabel">Project Details: Store Renovation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Project Main Info -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr><th>Store:</th><td>Main Warehouse</td></tr>
+                            <tr><th>Status:</th><td><span class="badge bg-info text-dark">In Progress</span></td></tr>
+                            <tr><th>Manager:</th><td>Fatima Noor</td></tr>
+                            <tr><th>Team:</th><td>Ali, Omar, Sara</td></tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table table-borderless">
+                            <tr><th>Start Date:</th><td>2025-10-01</td></tr>
+                            <tr><th>End Date:</th><td>2025-11-10</td></tr>
+                            <tr><th>Last Updated:</th><td>2025-10-05</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <strong>Description:</strong>
+                    <p>Renovating the west wing to increase storage capacity and update safety systems.</p>
+                </div>
+                <!-- Milestones/Timeline -->
+                <h5 class="mt-4">Project Milestones / Timeline</h5>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Step</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Assigned</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Planning</td>
+                                <td>2025-09-25</td>
+                                <td><span class="badge bg-success">Completed</span></td>
+                                <td>Sara</td>
+                                <td>All documents prepared</td>
+                            </tr>
+                            <tr>
+                                <td>Demolition</td>
+                                <td>2025-10-02</td>
+                                <td><span class="badge bg-info text-dark">In Progress</span></td>
+                                <td>Omar</td>
+                                <td>Half done</td>
+                            </tr>
+                            <tr>
+                                <td>Shelving Install</td>
+                                <td>2025-10-10</td>
+                                <td><span class="badge bg-secondary">Pending</span></td>
+                                <td>Ali</td>
+                                <td>Starts next week</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Activity Log -->
+                <h5 class="mt-4">Activity / Comments Log</h5>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <b>2025-10-05, Fatima Noor:</b> Demolition ongoing, expected to finish by 10/7.
+                    </li>
+                    <li class="list-group-item">
+                        <b>2025-09-28, Sara Ali:</b> Planning completed, all permits received.
+                    </li>
+                </ul>
+                <!-- Attachments (optional, just for UI) -->
+                <h5 class="mt-4">Attachments</h5>
+                <ul>
+                    <li><a href="#">Blueprint_WestWing.pdf</a></li>
+                    <li><a href="#">Permit_Approval.jpg</a></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

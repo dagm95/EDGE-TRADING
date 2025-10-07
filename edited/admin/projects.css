@@ -1,0 +1,35 @@
+body {
+    background: #f8f9fa;
+}
+h2 {
+    font-weight: 700;
+}
+.card {
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+.card-header {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.btn-sm {
+    min-width: 65px;
+}
+.badge {
+    font-size: 0.95em;
+    padding: 0.5em 0.85em;
+}
+.modal-content {
+    border-radius: 10px;
+}
+.modal-header {
+    background: #e9ecef;
+}
+@media (max-width: 576px) {
+    .card, .table-responsive {
+        margin-bottom: 1rem;
+    }
+}

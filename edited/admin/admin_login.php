@@ -8,14 +8,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $p = $_POST['password'];
     if ($u === ADMIN_USER && $p === ADMIN_PASS) {
         $_SESSION['admin_logged'] = true;
-    header('Location: ../admin/admin_management.php');
+    header('Location: admin_management.php');
         exit;
     } else {
         $err = 'Invalid username or password';
     }
 }
 if (!empty($_SESSION['admin_logged'])) {
-    header('Location: ../admin/admin_management.php');
+    header('Location: admin_management.php');
     exit;
 }
 ?>
@@ -26,7 +26,6 @@ if (!empty($_SESSION['admin_logged'])) {
     <title>Admin Login</title>
     <link rel="stylesheet" href="../css/custom.css">
     <style>
-        /* small centering helper in case layout lacks container */
         .auth-wrap{max-width:360px;margin:60px auto}
     </style>
 </head>
