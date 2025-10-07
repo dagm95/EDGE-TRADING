@@ -1,0 +1,53 @@
+body {
+    background: #f8f9fa;
+}
+h2 {
+    font-weight: 700;
+}
+.card {
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+.card-header {
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+.table th, .table td {
+    vertical-align: middle;
+}
+.btn-sm {
+    min-width: 65px;
+}
+.badge {
+    font-size: 0.95em;
+    padding: 0.5em 0.85em;
+}
+.avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #e9ecef;
+    object-fit: cover;
+}
+.avatar-lg {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 3px solid #e9ecef;
+    object-fit: cover;
+}
+.modal-content {
+    border-radius: 10px;
+}
+.modal-header {
+    background: #e9ecef;
+}
+@media (max-width: 576px) {
+    .card, .table-responsive {
+        margin-bottom: 1rem;
+    }
+    .avatar-lg {
+        width: 64px;
+        height: 64px;
+    }
+}

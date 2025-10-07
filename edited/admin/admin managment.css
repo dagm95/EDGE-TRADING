@@ -1,0 +1,82 @@
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+.sidebar {
+    min-width: 220px;
+    background: #343a40;
+    color: #fff;
+    min-height: 100vh;
+}
+.sidebar a {
+    color: #adb5bd;
+    text-decoration: none;
+    display: block;
+    padding: 12px 20px;
+    transition: background 0.2s, color 0.2s;
+}
+.sidebar a.active, .sidebar a:hover {
+    background: #495057;
+    color: #fff;
+}
+.sidebar .sidebar-header {
+    font-size: 1.3rem;
+    padding: 24px 20px 16px 20px;
+    background: #23272b;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+.content {
+    padding: 32px;
+}
+.navbar {
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+}
+.card {
+    border: none;
+    border-radius: 12px;
+}
+.kpi { position: relative; overflow: hidden; }
+.kpi .kpi-header { display:flex; align-items:center; gap:.5rem; font-weight:600; color:#4a5568; }
+.kpi .kpi-header i { font-size:1.25rem; }
+.kpi .kpi-value { font-size:2.25rem; font-weight:800; line-height:1; margin-top:.25rem; }
+.kpi .kpi-sub { color:#718096; font-size:.85rem; margin-top:.25rem; }
+.kpi-blue { background: linear-gradient(135deg, #e6f0ff, #ffffff); }
+.kpi-green { background: linear-gradient(135deg, #e6ffef, #ffffff); }
+.kpi-orange { background: linear-gradient(135deg, #fff4e6, #ffffff); }
+.kpi-purple { background: linear-gradient(135deg, #f3e8ff, #ffffff); }
+.section-title { display:flex; align-items:center; gap:.5rem; }
+.activity-list .list-group-item { display:flex; align-items:center; gap:.75rem; padding:.6rem .75rem; }
+.activity-list .icon { width:28px; height:28px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; }
+.icon-blue { background:#e6f0ff; color:#1a73e8; }
+.icon-green { background:#e6ffef; color:#10b981; }
+.icon-orange { background:#fff4e6; color:#f59e0b; }
+.icon-purple { background:#f3e8ff; color:#8b5cf6; }
+table.table th, table.table td { vertical-align: middle; }
+.badge-soft { background: #edf2f7; color:#4a5568; }
+.badge-live { background: #dcfce7; color:#166534; }
+.badge-off { background: #fee2e2; color:#991b1b; }
+.card .card-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #343a40;
+}
+.card .card-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #007bff;
+}
+@media (max-width: 767.98px) {
+    .sidebar {
+        min-width: 100vw;
+        min-height: unset;
+        position: relative;
+    }
+    .content {
+        padding: 16px;
+    }
+}
+@media (max-width: 991px) {
+  .kpi .kpi-value { font-size:1.75rem; }
+}

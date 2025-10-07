@@ -1,0 +1,102 @@
+/* Custom consolidated styles moved from inline page styles */
+
+/* Reset icon and overlay exceptions */
+.icon,
+[class^="icon-"],
+[class*=" icon-"] {
+  color: inherit !important;
+}
+.overlay {
+  background: rgba(0,0,0,0.3) !important;
+}
+
+/* Global: ensure readable text color where pages had forced black */
+body, body * {
+  color: #000 !important;
+}
+
+/* NAVBAR: ensure collapsed/slide-down menu has white background and black text */
+#ftco-navbar, .ftco_navbar, .ftco-navbar-light {
+  background-color: #ffffff !important;
+}
+#ftco-nav, #ftco-nav .navbar-nav, .navbar-collapse {
+  background-color: #ffffff !important;
+}
+.navbar-collapse.show { background-color: #ffffff !important; }
+#ftco-nav .nav-link, .ftco_navbar .nav-link { color: #000000 !important; }
+#ftco-nav .nav-link:hover, .ftco_navbar .nav-link:hover { color: #222222 !important; }
+.navbar-toggler { border-color: rgba(0,0,0,0.08); }
+.navbar-toggler .oi, .navbar-toggler-icon { color: #000; }
+
+/* Footer dark exception preserved */
+footer.ftco-footer.ftco-bg-dark { background-color: #222 !important; color: #fff !important; }
+footer.ftco-footer.ftco-bg-dark a { color: #fff !important; }
+
+/* Appointment form container */
+.appointment-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.appointment-container h2 { text-align: center; }
+.appointment-container label { display:block; margin-top:12px }
+.appointment-container input, .appointment-container textarea { width:100%; padding:8px; margin-top:4px; border:1px solid #ccc; border-radius:4px }
+.appointment-container button { margin-top:16px; width:100%; padding:10px; background:#0078d4; color:#fff; border:none; border-radius:4px }
+
+/* Small admin-login container (used on appointment page) */
+.appointment-container.admin-login { max-width:380px; }
+
+/* Admin table and buttons */
+.admin-table { font-family: Arial, Helvetica, sans-serif; margin:20px auto; max-width:1200px }
+.admin-table table{border-collapse:collapse;width:100%}
+.admin-table th, .admin-table td{border:1px solid #ddd;padding:8px}
+.admin-table th{background:#f4f4f4}
+.btn{padding:6px 8px;border:1px solid #ccc;background:#eee;border-radius:4px;cursor:pointer}
+.btn.checkin{background:#4caf50;color:white}
+.btn.missed{background:#f39c12;color:white}
+.btn.delete{background:#e74c3c;color:white}
+
+/* Availability status */
+#availability{margin-top:8px;font-weight:600}
+
+/* Minimal helpers for form-control and grid used in updated forms */
+.form-group{margin-bottom:12px}
+.form-control{display:block;width:100%;padding:8px 10px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
+.form-row{display:flex;flex-wrap:wrap;margin-right:-8px;margin-left:-8px}
+.form-row .form-group{padding-right:8px;padding-left:8px}
+.col-md-6{flex:0 0 50%;max-width:50%}
+
+@media (max-width:600px){
+  .col-md-6{flex:0 0 100%;max-width:100%}
+  .form-row{margin-right:0;margin-left:0}
+}
+
+/* Toast/flash message */
+.toast-msg{position:fixed;right:20px;top:20px;background:#28a745;color:#fff;padding:12px 16px;border-radius:6px;box-shadow:0 2px 6px rgba(0,0,0,.15);display:none;z-index:5000}
+.toast-error{background:#e74c3c}
+
+/* small responsive tweaks */
+@media (max-width:600px){
+  .appointment-container { margin:20px; padding:16px }
+  .appointment-container button{ padding:12px }
+}
+
+/* Top homepage tagline banner */
+.top-tagline{background:linear-gradient(90deg, #0078d4 0%, #00a3ff 100%);color:#fff;padding:28px 0}
+.top-tagline .tagline-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.top-tagline h2{margin:0;font-size:1.3rem;font-weight:600}
+.top-tagline p{margin:0;opacity:0.95}
+.top-tagline .btn{background:#fff;color:#0078d4;border:none;padding:10px 16px;border-radius:6px}
+
+@media (max-width:768px){
+  .top-tagline .tagline-inner{flex-direction:column;align-items:flex-start}
+  .top-tagline h2{font-size:1.1rem}
+}
+
+/* testimony form small styles */
+.testimony-form .form-group{margin-bottom:12px}
+.testimony-form .btn{min-width:160px}
+.testimony-form #testimonyStatus{font-weight:600}

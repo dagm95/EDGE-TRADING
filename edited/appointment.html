@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Appointment — EDGE TRADING</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+
+    <link rel="stylesheet" href="css/aos.css">
+
+    <link rel="stylesheet" href="css/ionicons.min.css">
+
+    <link rel="stylesheet" href="css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="css/jquery.timepicker.css">
+
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/icomoon.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/custom.css">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-white ftco_navbar" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">EDGE Trading</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+                aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="project.html" class="nav-link">Project</a></li>
+                    <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
+                    <li class="nav-item"><a href="team.html" class="nav-link">Team</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item active"><a href="appointment.html" class="nav-link">Appointment</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="appointment-container">
+        <h2>Book an Appointment</h2>
+        <form action="php/submit_appointment.php" method="POST">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input class="form-control" type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input class="form-control" type="text" id="phone" name="phone" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="date">Date</label>
+                    <input class="form-control" type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="time">Time</label>
+                    <input class="form-control" type="time" id="time" name="time" required>
+                </div>
+            </div>
+            <div id="availability"></div>
+            <div class="form-group">
+                <label for="message">Message (optional)</label>
+                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Book Appointment</button>
+        </form>
+    </div>
+
+    <!-- Admin login panel (only on appointment page) -->
+    <div class="appointment-container admin-login">
+        <h3>Admin Login</h3>
+        <form action="php/admin_login.php" method="POST">
+            <div class="form-group">
+                <label for="admin_user">Username</label>
+                <input class="form-control" type="text" id="admin_user" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="admin_pass">Password</label>
+                <input class="form-control" type="password" id="admin_pass" name="password" required>
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+        </form>
+    </div>
+
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">EDGE TRADING </h2>
+                        <p>Trusted for interior design, woodworks, printing & advertising and metalworks.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>Copyright &copy;<script>document.write(new Date().getFullYear());</script> EDGE TRADING</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
+            <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
+            <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00" />
+        </svg></div>
+
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/jquery.waypoints.min.js"></script>
+    <script src="js/jquery.stellar.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/aos.js"></script>
+    <script src="js/jquery.animateNumber.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="js/scrollax.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // AJAX check for date+time availability
+        $(function(){
+            var checkTimeout = null;
+            function checkAvailability(){
+                var date = $('#date').val();
+                var time = $('#time').val();
+                if (!date || !time) { $('#availability').text(''); return; }
+                $('#availability').text('Checking availability...');
+                $.post('php/check_availability.php', { date: date, time: time }, function(resp){
+                    try{ var j = (typeof resp === 'string') ? JSON.parse(resp) : resp; }
+                    catch(e){ $('#availability').text('Error checking availability'); return; }
+                    if (j.available) {
+                        $('#availability').css('color','green').text('Slot available');
+                    } else {
+                        $('#availability').css('color','red').text('Slot already taken. Please choose another time.');
+                    }
+                });
+            }
+            $('#date, #time').on('change input', function(){
+                if (checkTimeout) clearTimeout(checkTimeout);
+                checkTimeout = setTimeout(checkAvailability, 350);
+            });
+        });
+    </script>
+
+        <div class="toast-msg" id="toast"></div>
+        <script>
+            // show toast if status in querystring
+            (function(){
+                function qs(name){
+                    name = name.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");
+                    var regex = new RegExp('[\\?&]'+name+'=([^&#]*)');
+                    var results = regex.exec(location.search);
+                    return results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : null;
+                }
+                var s = qs('status');
+                var msg = document.getElementById('toast');
+                if (s === 'success'){
+                    msg.className = 'toast-msg';
+                    msg.innerText = 'Appointment booked — we will confirm it.';
+                    msg.style.display = 'block';
+                    setTimeout(function(){ msg.style.display='none'; history.replaceState(null,'', location.pathname); }, 3500);
+                } else if (s === 'error'){
+                    msg.className = 'toast-msg toast-error';
+                    var m = qs('msg') || 'Error booking appointment';
+                    msg.innerText = m;
+                    msg.style.display = 'block';
+                    setTimeout(function(){ msg.style.display='none'; history.replaceState(null,'', location.pathname); }, 3500);
+                }
+            })();
+        </script>
+
+</body>
+
+</html>
