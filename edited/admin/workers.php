@@ -152,7 +152,7 @@ if (isset($_GET['action'])) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Workers</title>
+  <title>Employees</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="workers.css">
   <style>
@@ -163,7 +163,7 @@ if (isset($_GET['action'])) {
 <body class="bg-light">
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3 class="mb-0">Workers</h3>
+  <h3 class="mb-0">Employees</h3>
     <div>
   <a href="admin_management.php" class="btn btn-outline-secondary">Back to Dashboard</a>
   <a href="admin_logout.php" class="btn btn-outline-danger">Logout</a>
@@ -210,12 +210,12 @@ if (isset($_GET['action'])) {
       </select>
     </div>
     <div class="col-md-3 text-end">
-      <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addWorkerModal">Add Worker</button>
+  <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#addWorkerModal">Add Employee</button>
     </div>
   </form>
 
   <div class="card">
-    <div class="card-header bg-primary text-white">Workers List</div>
+  <div class="card-header bg-primary text-white">Employees List</div>
     <div class="table-responsive">
   <table class="table table-hover align-middle mb-0" id="workersTable">
         <thead class="table-light">
@@ -263,7 +263,7 @@ if (isset($_GET['action'])) {
                 'start_date'=>$w['start_date'],
                 'probation_end'=>$w['probation_end']
               ], JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP) ?>'>View</button>
-              <a href="?delete=<?= (int)$w['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this worker?')">Delete</a>
+              <a href="?delete=<?= (int)$w['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Delete this employee?')">Delete</a>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -287,7 +287,7 @@ if (isset($_GET['action'])) {
     <div class="p-3">
       <div class="row g-2 mb-2">
         <div class="col-md-4">
-          <input type="text" id="attSearch" class="form-control" placeholder="Search worker...">
+          <input type="text" id="attSearch" class="form-control" placeholder="Search employee...">
         </div>
         <div class="col-md-8 text-end">
           <div class="btn-group btn-group-sm" role="group">
@@ -303,7 +303,7 @@ if (isset($_GET['action'])) {
           <thead>
             <tr>
               <th style="width:36px"><input type="checkbox" id="attSelectAll"></th>
-              <th>Worker</th>
+              <th>Employee</th>
               <th>Position</th>
               <th>Store</th>
               <th>Status</th>
@@ -313,7 +313,7 @@ if (isset($_GET['action'])) {
             </tr>
           </thead>
           <tbody>
-            <!-- Populated by workers_attendance.js based on Workers List -->
+            <!-- Populated by workers_attendance.js based on Employees List -->
           </tbody>
         </table>
       </div>
@@ -400,7 +400,7 @@ if (isset($_GET['action'])) {
           <table class="table table-hover align-middle mb-0">
             <thead class="table-light">
               <tr>
-                <th>Worker</th>
+                <th>Employee</th>
                 <th>Position</th>
                 <th>Store</th>
                 <th>Status</th>
@@ -416,14 +416,14 @@ if (isset($_GET['action'])) {
     </div>
   </div>
 </div>
-<!-- Add Worker Modal -->
+<!-- Add Employee Modal -->
 <div class="modal fade" id="addWorkerModal" tabindex="-1" aria-labelledby="addWorkerLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <form method="post">
         <input type="hidden" name="create_worker" value="1">
         <div class="modal-header">
-          <h5 class="modal-title" id="addWorkerLabel">Add New Worker</h5>
+          <h5 class="modal-title" id="addWorkerLabel">Add New Employee</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -472,19 +472,19 @@ if (isset($_GET['action'])) {
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Add Worker</button>
+          <button type="submit" class="btn btn-primary">Add Employee</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<!-- View Worker Modal -->
+<!-- View Employee Modal -->
 <div class="modal fade" id="viewWorkerModal" tabindex="-1" aria-labelledby="viewWorkerLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="viewWorkerLabel">Worker Details</h5>
+  <h5 class="modal-title" id="viewWorkerLabel">Employee Details</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

@@ -10,27 +10,10 @@
 
     // Dummy in-memory data (replace with real API calls later)
     const state = {
-        stores: [
-            { name: 'Main Street', location: 'Downtown', manager: 'Ava Cole', status: 'Open' },
-            { name: 'North Hub', location: 'Uptown', manager: 'Liam Park', status: 'Open' },
-            { name: 'East Point', location: 'Riverside', manager: 'Noah Kim', status: 'Closed' },
-            { name: 'West Gate', location: 'Westside', manager: 'Mia Chen', status: 'Open' },
-            { name: 'South Bay', location: 'Harbor', manager: 'Ethan Diaz', status: 'Open' }
-        ],
-        workers: [
-            { name: 'John Doe', role: 'Cashier', store: 'Main Street', status: 'Active' },
-            { name: 'Jane Smith', role: 'Manager', store: 'North Hub', status: 'Active' },
-            { name: 'Sam Green', role: 'Stock', store: 'East Point', status: 'On Leave' },
-            { name: 'Sara Lee', role: 'Security', store: 'West Gate', status: 'Active' },
-            { name: 'Tom Brown', role: 'Cashier', store: 'South Bay', status: 'Active' }
-            // ... add more to reach 32 if desired
-        ],
-        
-        projects: [
-            { project: 'Renovation', store: 'Main Street', owner: 'Ava Cole', due: '2025-11-01', status: 'In Progress' },
-            { project: 'New Signage', store: 'West Gate', owner: 'Design Team', due: '2025-10-20', status: 'Planning' },
-            { project: 'Inventory Revamp', store: 'North Hub', owner: 'Ops', due: '2025-12-10', status: 'In Progress' }
-        ],
+        // Start with empty arrays; will populate from API or user input
+        stores: [],
+        workers: [],
+        projects: [],
         activity: []
     };
 
@@ -124,7 +107,7 @@
     // Chart
     let chart;
     function generateSeries(days) {
-        // simple demo series: workers and projects counts varying
+        // simple demo series: employees (workers) and projects counts varying
         const labels = [];
         const workers = [];
         const projects = [];
@@ -145,7 +128,7 @@
             data: {
                 labels,
                 datasets: [
-                    { label: 'Workers', data: workers, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.15)', tension:.35, fill:true },
+                    { label: 'Employees', data: workers, borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.15)', tension:.35, fill:true },
                     { label: 'Projects', data: projects, borderColor: '#6366f1', backgroundColor: 'rgba(99,102,241,.15)', tension:.35, fill:true }
                 ]
             },
@@ -186,7 +169,7 @@
             if (!name) return;
             state.workers.push({ name, role, store, status: 'Active' });
             renderKpis(); renderTables();
-            addActivity('bi bi-person-plus', 'icon-green', `Worker ${name} added`);
+            addActivity('bi bi-person-plus', 'icon-green', `Employee ${name} added`);
             bootstrap.Modal.getInstance(document.getElementById('modalWorker')).hide();
         });
 
@@ -245,11 +228,7 @@
             const iconMap = { info: 'bi bi-info-circle', success: 'bi bi-check-circle', warning: 'bi bi-exclamation-triangle', error: 'bi bi-x-circle' };
             const colorMap = { info: 'icon-blue', success: 'icon-green', warning: 'icon-orange', error: 'icon-red' };
             notes.slice(0, 6).forEach(n => addActivity(iconMap[n.type] || 'bi bi-bell', colorMap[n.type] || 'icon-blue', n.title));
-        } else {
-            addActivity('bi bi-shop', 'icon-blue', 'West Gate store reopened');
-            addActivity('bi bi-people', 'icon-green', '3 new workers onboarded');
-            addActivity('bi bi-kanban', 'icon-purple', 'Inventory Revamp moved to In Progress');
-        }
+        } // No fallback demo activity; keep empty when no notifications
 
         // Chart
         initChart(7);

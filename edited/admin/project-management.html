@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="project-management.css">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="mb-0">Project Management</h3>
+    <div>
+      <a href="admin managment.html" class="btn btn-outline-secondary">Back to Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Create Project -->
+  <div class="card section-card mb-4">
+    <div class="card-header bg-primary text-white">
+      <span>New Project</span>
+    </div>
+    <div class="card-body">
+      <form class="row g-3">
+        <div class="col-md-4"><label class="form-label">Name</label><input class="form-control" required></div>
+        <div class="col-md-4"><label class="form-label">Store</label><select class="form-select"><option>Main Warehouse</option><option>Secondary Store</option></select></div>
+        <div class="col-md-4"><label class="form-label">Customer Email</label><input type="email" class="form-control" placeholder="for weekly reports"></div>
+        <div class="col-md-6"><label class="form-label">Description</label><textarea class="form-control" rows="2"></textarea></div>
+        <div class="col-md-3"><label class="form-label">Owner</label><input class="form-control"></div>
+        <div class="col-md-3"><label class="form-label">Status</label><select class="form-select"><option>Planning</option><option>In Progress</option><option>Blocked</option><option>Done</option><option>Cancelled</option></select></div>
+        <div class="col-md-3"><label class="form-label">Start Date</label><input type="date" class="form-control"></div>
+        <div class="col-md-3"><label class="form-label">Finish Date</label><input type="date" class="form-control"></div>
+        <div class="col-md-3"><label class="form-label">Duration (months)</label><select class="form-select"><option value="">Custom</option><option>1</option><option>2</option><option>3</option></select><div class="form-hint">Auto-calc end date when set</div></div>
+        <div class="col-md-3"><label class="form-label">Workspace Type</label><select class="form-select"><option>Furniture</option><option>Aluminum & Metal</option><option>Interior Design</option><option selected>Other</option></select></div>
+        <div class="col-md-3"><label class="form-label">Warehouse</label><input class="form-control" placeholder="link to saved warehouse"></div>
+        <div class="col-md-3"><label class="form-label">Workspace</label><input class="form-control" placeholder="e.g., Bay-12"></div>
+        <div class="col-md-3"><label class="form-label">Manager</label><select class="form-select"><option>ali.hassan</option><option>fatima.noor</option></select></div>
+        <div class="col-md-3"><label class="form-label">Reporter</label><select class="form-select"><option>omar.said</option><option>sara.ali</option></select></div>
+        <div class="col-12"><button class="btn btn-primary" type="button">Create</button></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Projects List -->
+  <div class="card section-card mb-4">
+    <div class="card-header">
+      <span>Projects</span>
+      <div class="ms-auto"></div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Name</th><th>Store</th><th>Workspace</th><th>Manager</th><th>Reporter</th><th>Start</th><th>End</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Store Renovation</td>
+            <td>Main Warehouse</td>
+            <td>WH-A / Bay-12</td>
+            <td>fatima.noor</td>
+            <td>omar.said</td>
+            <td>2025-10-01</td>
+            <td>2025-12-01</td>
+            <td><span class="badge bg-primary">In Progress</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Items Needed -->
+  <div class="card section-card mb-4">
+    <div class="card-header bg-success text-white">
+      <span>Items Needed</span>
+    </div>
+    <div class="card-body">
+      <form class="row g-2">
+        <div class="col-md-3"><label class="form-label">Project</label><select class="form-select"><option>Store Renovation</option></select></div>
+        <div class="col-md-3"><label class="form-label">Material</label><select class="form-select"><option>RM-001 - Steel Sheets</option></select></div>
+        <div class="col-md-2"><label class="form-label">Quantity</label><input type="number" step="0.001" class="form-control"></div>
+        <div class="col-md-2"><label class="form-label">Warehouse</label><input class="form-control"></div>
+        <div class="col-md-2"><label class="form-label">Workspace</label><input class="form-control"></div>
+        <div class="col-12"><label class="form-label">Notes</label><input class="form-control" placeholder="Optional notes"></div>
+        <div class="col-12 text-end"><button class="btn btn-success" type="button">Add Item</button></div>
+      </form>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Project</th><th>Material</th><th>Qty</th><th>Warehouse</th><th>Workspace</th><th>Notes</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Store Renovation</td>
+            <td>RM-001 - Steel Sheets</td>
+            <td>120.000</td>
+            <td>WH-A</td>
+            <td>Bay-12</td>
+            <td>Urgent</td>
+            <td class="text-end"><button class="btn btn-sm btn-outline-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Reports (Analysis / Weekly) -->
+  <div class="card section-card mb-4">
+    <div class="card-header bg-info text-dark">Reports</div>
+    <div class="card-body">
+      <form class="row g-2">
+        <div class="col-md-3"><label class="form-label">Project</label><select class="form-select"><option>Store Renovation</option></select></div>
+        <div class="col-md-2"><label class="form-label">Type</label><select class="form-select"><option>Analysis</option><option>Weekly</option></select></div>
+        <div class="col-md-3"><label class="form-label">Title</label><input class="form-control" required></div>
+        <div class="col-md-2"><label class="form-label">Report Date</label><input type="date" class="form-control" value="2025-10-07"></div>
+        <div class="col-md-2"><label class="form-label">Send To (email)</label><input class="form-control" placeholder="auto-fill from project"></div>
+        <div class="col-12"><label class="form-label">Body</label><textarea class="form-control" rows="3"></textarea></div>
+        <div class="col-md-3"><label class="form-label">Created By</label><select class="form-select"><option>omar.said</option><option>sara.ali</option></select></div>
+        <div class="col-12 text-end"><button class="btn btn-info" type="button">Create Report</button></div>
+      </form>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light"><tr><th>Project</th><th>Type</th><th>Title</th><th>Date</th><th>To</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Store Renovation</td>
+            <td><span class="badge bg-primary">Weekly</span></td>
+            <td>Week 1 Progress</td>
+            <td>2025-10-07</td>
+            <td>client@example.com</td>
+            <td><span class="badge bg-warning text-dark">pending</span></td>
+            <td class="text-end"><button class="btn btn-sm btn-outline-danger">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<</html>

@@ -34,18 +34,33 @@ try {
       $store_id = (int)$_POST['store_id'];
       $material_id = (int)$_POST['material_id'];
       $qty = dec($_POST['quantity']);
+      $warehouse = trim($_POST['warehouse'] ?? '');
+      $workspace = trim($_POST['workspace'] ?? '');
       // Upsert inventory
       $db->begin_transaction();
-      $stmt = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? FOR UPDATE");
-      $stmt->bind_param('ii', $store_id, $material_id);
+      // Backward-compatible check: include warehouse/workspace if columns exist
+      $hasCols = $db->query("SHOW COLUMNS FROM inventory LIKE 'warehouse'");
+      $useLoc = ($hasCols && $hasCols->num_rows > 0);
+      if ($useLoc) {
+        $stmt = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? AND warehouse=? AND workspace=? FOR UPDATE");
+        $stmt->bind_param('iiss', $store_id, $material_id, $warehouse, $workspace);
+      } else {
+        $stmt = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? FOR UPDATE");
+        $stmt->bind_param('ii', $store_id, $material_id);
+      }
       $stmt->execute(); $res = $stmt->get_result();
       if ($row = $res->fetch_assoc()) {
         $stmt2 = $db->prepare("UPDATE inventory SET quantity=?, last_update=NOW() WHERE id=?");
         $stmt2->bind_param('di', $qty, $row['id']);
         $stmt2->execute();
       } else {
-        $stmt2 = $db->prepare("INSERT INTO inventory (store_id, material_id, quantity, last_update) VALUES (?,?,?,NOW())");
-        $stmt2->bind_param('iid', $store_id, $material_id, $qty);
+        if ($useLoc) {
+          $stmt2 = $db->prepare("INSERT INTO inventory (store_id, material_id, warehouse, workspace, quantity, last_update) VALUES (?,?,?,?,?,NOW())");
+          $stmt2->bind_param('iissd', $store_id, $material_id, $warehouse, $workspace, $qty);
+        } else {
+          $stmt2 = $db->prepare("INSERT INTO inventory (store_id, material_id, quantity, last_update) VALUES (?,?,?,NOW())");
+          $stmt2->bind_param('iid', $store_id, $material_id, $qty);
+        }
         $stmt2->execute();
       }
       $db->commit();
@@ -58,14 +73,29 @@ try {
       $type = $_POST['movement_type'];
       $date = $_POST['movement_date'] ?: date('Y-m-d');
       $ref = post('reference'); $user = post('user_name'); $notes = post('notes');
+      $warehouse = trim($_POST['warehouse'] ?? '');
+      $workspace = trim($_POST['workspace'] ?? '');
       // Apply inventory effect in a transaction
       $db->begin_transaction();
-  $stmt = $db->prepare("INSERT INTO stock_movements (movement_date, store_id, material_id, movement_type, quantity, reference, user_name, notes) VALUES (?,?,?,?,?,?,?,?)");
-  $stmt->bind_param('siisdsss', $date, $store_id, $material_id, $type, $qty, $ref, $user, $notes);
+      // Check if new columns exist
+      $hasColsMv = $db->query("SHOW COLUMNS FROM stock_movements LIKE 'warehouse'");
+      $useLocMv = ($hasColsMv && $hasColsMv->num_rows > 0);
+      if ($useLocMv) {
+        $stmt = $db->prepare("INSERT INTO stock_movements (movement_date, store_id, material_id, movement_type, quantity, reference, user_name, warehouse, workspace, notes) VALUES (?,?,?,?,?,?,?,?,?,?)");
+        $stmt->bind_param('siisdsssss', $date, $store_id, $material_id, $type, $qty, $ref, $user, $warehouse, $workspace, $notes);
+      } else {
+        $stmt = $db->prepare("INSERT INTO stock_movements (movement_date, store_id, material_id, movement_type, quantity, reference, user_name, notes) VALUES (?,?,?,?,?,?,?,?)");
+        $stmt->bind_param('siisdsss', $date, $store_id, $material_id, $type, $qty, $ref, $user, $notes);
+      }
       $stmt->execute();
       // Lock inventory row
-      $stmt2 = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? FOR UPDATE");
-      $stmt2->bind_param('ii', $store_id, $material_id);
+      if ($useLocMv) {
+        $stmt2 = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? AND warehouse=? AND workspace=? FOR UPDATE");
+        $stmt2->bind_param('iiss', $store_id, $material_id, $warehouse, $workspace);
+      } else {
+        $stmt2 = $db->prepare("SELECT id, quantity FROM inventory WHERE store_id=? AND material_id=? FOR UPDATE");
+        $stmt2->bind_param('ii', $store_id, $material_id);
+      }
       $stmt2->execute(); $res = $stmt2->get_result();
       $delta = $qty;
       if ($type === 'Receipt') $delta = $qty;
@@ -78,8 +108,13 @@ try {
         $stmt3->execute();
       } else {
         $newQty = max(0.0, $delta);
-        $stmt3 = $db->prepare("INSERT INTO inventory (store_id, material_id, quantity, last_update) VALUES (?,?,?,NOW())");
-        $stmt3->bind_param('iid', $store_id, $material_id, $newQty);
+        if ($useLocMv) {
+          $stmt3 = $db->prepare("INSERT INTO inventory (store_id, material_id, warehouse, workspace, quantity, last_update) VALUES (?,?,?,?,?,NOW())");
+          $stmt3->bind_param('iissd', $store_id, $material_id, $warehouse, $workspace, $newQty);
+        } else {
+          $stmt3 = $db->prepare("INSERT INTO inventory (store_id, material_id, quantity, last_update) VALUES (?,?,?,NOW())");
+          $stmt3->bind_param('iid', $store_id, $material_id, $newQty);
+        }
         $stmt3->execute();
       }
       $db->commit();
@@ -121,10 +156,18 @@ $stores = $db->query("SELECT id, name, location, manager, status FROM stores ORD
 $materials = $db->query("SELECT id, code, name, unit, min_stock, max_stock, status FROM materials ORDER BY id DESC");
 $inventory = $db->query("SELECT * FROM v_inventory_status ORDER BY last_update DESC");
 if ($inventory === false) {
-  $sqlInv = "SELECT i.id, i.store_id, s.name AS store_name, i.material_id, m.code AS material_code, m.name AS material_name, m.unit, m.min_stock, m.max_stock, i.quantity, i.last_update, CASE WHEN i.quantity < m.min_stock THEN 'Low' WHEN i.quantity > m.max_stock THEN 'High' ELSE 'OK' END AS status FROM inventory i JOIN stores s ON s.id=i.store_id JOIN materials m ON m.id=i.material_id ORDER BY i.last_update DESC";
+  // Include warehouse/workspace if present
+  $hasCols = $db->query("SHOW COLUMNS FROM inventory LIKE 'warehouse'");
+  $hasLoc = ($hasCols && $hasCols->num_rows > 0);
+  $selLoc = $hasLoc ? ", i.warehouse, i.workspace" : "";
+  $sqlInv = "SELECT i.id, i.store_id, s.name AS store_name, i.material_id, m.code AS material_code, m.name AS material_name, m.unit, m.min_stock, m.max_stock, i.quantity, i.last_update" . $selLoc . ", CASE WHEN i.quantity < m.min_stock THEN 'Low' WHEN i.quantity > m.max_stock THEN 'High' ELSE 'OK' END AS status FROM inventory i JOIN stores s ON s.id=i.store_id JOIN materials m ON m.id=i.material_id ORDER BY i.last_update DESC";
   $inventory = $db->query($sqlInv);
 }
-$movements = $db->query("SELECT sm.*, s.name AS store_name, m.name AS material_name FROM stock_movements sm JOIN stores s ON s.id=sm.store_id JOIN materials m ON m.id=sm.material_id ORDER BY sm.id DESC LIMIT 100");
+// Movements include warehouse/workspace if present
+$hasColsMv = $db->query("SHOW COLUMNS FROM stock_movements LIKE 'warehouse'");
+$hasLocMv = ($hasColsMv && $hasColsMv->num_rows > 0);
+$selLocMv = $hasLocMv ? ", sm.warehouse, sm.workspace" : "";
+$movements = $db->query("SELECT sm.*, s.name AS store_name, m.name AS material_name" . $selLocMv . " FROM stock_movements sm JOIN stores s ON s.id=sm.store_id JOIN materials m ON m.id=sm.material_id ORDER BY sm.id DESC LIMIT 100");
 $suppliers = $db->query("SELECT * FROM suppliers ORDER BY id DESC");
 $users = $db->query("SELECT * FROM store_users ORDER BY id DESC");
 $reporters = $db->query("SELECT * FROM reporters ORDER BY id DESC");
@@ -268,17 +311,21 @@ $reporters = $db->query("SELECT * FROM reporters ORDER BY id DESC");
             <option value="<?= (int)$m['id'] ?>"><?= htmlspecialchars($m['code'].' - '.$m['name']) ?></option>
           <?php endwhile; ?>
         </select></div>
+        <div class="col-md-2"><label class="form-label">Warehouse</label><input name="warehouse" class="form-control" placeholder="e.g., WH-A"></div>
+        <div class="col-md-2"><label class="form-label">Workspace</label><input name="workspace" class="form-control" placeholder="e.g., Bay-12"></div>
         <div class="col-md-3"><label class="form-label">Quantity</label><input name="quantity" type="number" step="0.001" class="form-control" required></div>
         <div class="col-md-3 d-flex align-items-end"><button class="btn btn-info text-white w-100">Save</button></div>
       </form>
     </div>
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
-        <thead class="table-light"><tr><th>Store</th><th>Material</th><th>Unit</th><th>Qty</th><th>Min</th><th>Max</th><th>Status</th><th>Updated</th><th class="text-end">Actions</th></tr></thead>
+        <thead class="table-light"><tr><th>Store</th><th>Warehouse</th><th>Workspace</th><th>Material</th><th>Unit</th><th>Qty</th><th>Min</th><th>Max</th><th>Status</th><th>Updated</th><th class="text-end">Actions</th></tr></thead>
         <tbody>
           <?php while($i=$inventory->fetch_assoc()): ?>
           <tr>
             <td><?= htmlspecialchars($i['store_name']) ?></td>
+            <td><?= htmlspecialchars($i['warehouse'] ?? '') ?></td>
+            <td><?= htmlspecialchars($i['workspace'] ?? '') ?></td>
             <td><?= htmlspecialchars($i['material_code'].' - '.$i['material_name']) ?></td>
             <td><?= htmlspecialchars($i['unit']) ?></td>
             <td><?= htmlspecialchars($i['quantity']) ?></td>
@@ -323,18 +370,22 @@ $reporters = $db->query("SELECT * FROM reporters ORDER BY id DESC");
         <div class="col-md-2"><label class="form-label">Quantity</label><input name="quantity" type="number" step="0.001" class="form-control" placeholder="e.g. 50 or -5 for Adjust" required></div>
         <div class="col-md-2"><label class="form-label">Reference</label><input name="reference" class="form-control" placeholder="INV/REQ"></div>
         <div class="col-md-2"><label class="form-label">User</label><input name="user_name" class="form-control" placeholder="who"></div>
+        <div class="col-md-2"><label class="form-label">Warehouse</label><input name="warehouse" class="form-control" placeholder="e.g., WH-A"></div>
+        <div class="col-md-2"><label class="form-label">Workspace</label><input name="workspace" class="form-control" placeholder="e.g., Bay-12"></div>
         <div class="col-md-4"><label class="form-label">Notes</label><input name="notes" class="form-control"></div>
         <div class="col-md-2 d-flex align-items-end"><button class="btn btn-secondary text-white w-100">Save</button></div>
       </form>
     </div>
     <div class="table-responsive">
       <table class="table table-hover align-middle mb-0">
-        <thead class="table-light"><tr><th>Date</th><th>Store</th><th>Material</th><th>Type</th><th>Qty</th><th>Ref</th><th>User</th><th class="text-end">Actions</th></tr></thead>
+        <thead class="table-light"><tr><th>Date</th><th>Store</th><th>Warehouse</th><th>Workspace</th><th>Material</th><th>Type</th><th>Qty</th><th>Ref</th><th>User</th><th class="text-end">Actions</th></tr></thead>
         <tbody>
           <?php while($mv=$movements->fetch_assoc()): ?>
           <tr>
             <td><?= htmlspecialchars($mv['movement_date']) ?></td>
             <td><?= htmlspecialchars($mv['store_name']) ?></td>
+            <td><?= htmlspecialchars($mv['warehouse'] ?? '') ?></td>
+            <td><?= htmlspecialchars($mv['workspace'] ?? '') ?></td>
             <td><?= htmlspecialchars($mv['material_name']) ?></td>
             <td><span class="badge <?= $mv['movement_type']==='Receipt'?'bg-success':($mv['movement_type']==='Issue'?'bg-danger':'bg-info text-dark') ?>"><?= htmlspecialchars($mv['movement_type']) ?></span></td>
             <td><?= htmlspecialchars($mv['quantity']) ?></td>

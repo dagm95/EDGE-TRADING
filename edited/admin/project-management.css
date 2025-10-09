@@ -1,0 +1,6 @@
+/* Project Management (static HTML) styles */
+.section-card .card-header{display:flex;align-items:center;justify-content:space-between}
+.badge-pill{border-radius:50rem;padding:.35rem .6rem}
+.subtext{font-size:.9rem;color:#6c757d}
+.table thead th{white-space:nowrap}
+.form-hint{font-size:.85rem;color:#6c757d}

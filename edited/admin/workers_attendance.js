@@ -1,12 +1,13 @@
-// Attendance checker: builds list from Workers table and allows marking statuses per day
+// Attendance checker: builds list from Employees (formerly Workers) table and allows marking statuses per day
 (function(){
   function qs(sel, el=document){ return el.querySelector(sel) }
   function qsa(sel, el=document){ return Array.from(el.querySelectorAll(sel)) }
 
-  // Parse existing workers rows into a simple model
+  // Parse existing employees rows into a simple model
   function getWorkers(){
-    // Find the specific card that has the "Workers List" header
-    const listCard = qsa('.card').find(c => (qs('.card-header', c)?.textContent || '').includes('Workers List'));
+  // Find the specific card that has the "Employees List" (or legacy "Workers List") header
+  const listHeaderMatch = (txt) => /Employees List|Workers List/i.test(txt || '');
+  const listCard = qsa('.card').find(c => listHeaderMatch(qs('.card-header', c)?.textContent));
     if(!listCard) return [];
     const rows = qsa('table tbody tr', listCard);
     return rows.map(r=>{
@@ -57,11 +58,11 @@
     const table = qs('#attendanceTable tbody'); if(!table) return;
     let data = await loadServer(date);
     if(data === null) { data = loadLocal(date); }
-    const workers = getWorkers();
+  const workers = getWorkers();
     const search = (qs('#attSearch')?.value||'').toLowerCase();
     const selectAll = qs('#attSelectAll'); if(selectAll) selectAll.checked = false;
     table.innerHTML = '';
-    workers.filter(w=>!search || w.name.toLowerCase().includes(search) || w.position.toLowerCase().includes(search) || w.store.toLowerCase().includes(search))
+  workers.filter(w=>!search || w.name.toLowerCase().includes(search) || w.position.toLowerCase().includes(search) || w.store.toLowerCase().includes(search))
       .forEach(w=>{
         const rec = data[w.id] || { status:'', in:'', out:'', notes:'' };
         const tr = document.createElement('tr');

@@ -38,7 +38,7 @@ if (empty($_SESSION['admin_logged'])) {
             </div>
             <a href="#" class="active"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
             <a href="stores.php"><i class="bi bi-shop me-2"></i>Stores</a>
-            <a href="workers.php"><i class="bi bi-people me-2"></i>Workers</a>
+            <a href="workers.php"><i class="bi bi-people me-2"></i>Employees</a>
             <a href="projects.php"><i class="bi bi-kanban me-2"></i>Projects</a>
             <a href="notifications.php"><i class="bi bi-bell me-2"></i>Notifications</a>
             <a href="admin_logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
@@ -79,7 +79,7 @@ if (empty($_SESSION['admin_logged'])) {
                     <div class="col-sm-6 col-lg-3">
                         <div class="card kpi kpi-green shadow-sm">
                             <div class="card-body">
-                                <div class="kpi-header"><i class="bi bi-people"></i><span>Workers</span></div>
+                                <div class="kpi-header"><i class="bi bi-people"></i><span>Employees</span></div>
                                 <div class="kpi-value" id="kpi-workers">0</div>
                                 <div class="kpi-sub">On roster</div>
                             </div>
@@ -100,7 +100,7 @@ if (empty($_SESSION['admin_logged'])) {
                 <!-- Quick Actions -->
                 <div class="quick-actions my-4">
                     <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#modalStore"><i class="bi bi-plus-circle me-1"></i>New Store</button>
-                    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalWorker"><i class="bi bi-person-plus me-1"></i>New Worker</button>
+                    <button class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalWorker"><i class="bi bi-person-plus me-1"></i>New Employee</button>
                     
                     <button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#modalProject"><i class="bi bi-kanban me-1"></i>New Project</button>
                 </div>
@@ -131,7 +131,7 @@ if (empty($_SESSION['admin_logged'])) {
                             <div class="card-body">
                                 <h5 class="mb-3">Quick Links</h5>
                                 <a class="btn btn-outline-secondary w-100 mb-2" href="stores.php"><i class="bi bi-shop me-1"></i>Manage Stores</a>
-                                <a class="btn btn-outline-secondary w-100 mb-2" href="workers.php"><i class="bi bi-people me-1"></i>Manage Workers</a>
+                                <a class="btn btn-outline-secondary w-100 mb-2" href="workers.php"><i class="bi bi-people me-1"></i>Manage Employees</a>
                                 <a class="btn btn-outline-secondary w-100 mb-2" href="notifications.php"><i class="bi bi-bell me-1"></i>Manage Notifications</a>
                                 <a class="btn btn-outline-secondary w-100" href="projects.php"><i class="bi bi-kanban me-1"></i>Manage Projects</a>
                             </div>
@@ -161,8 +161,8 @@ if (empty($_SESSION['admin_logged'])) {
 
                 <div class="mt-5" id="workers">
                     <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h3 class="section-title mb-0"><i class="bi bi-people me-2"></i>Workers</h3>
-                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalWorker"><i class="bi bi-person-plus"></i> Add Worker</button>
+                        <h3 class="section-title mb-0"><i class="bi bi-people me-2"></i>Employees</h3>
+                        <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#modalWorker"><i class="bi bi-person-plus"></i> Add Employee</button>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover align-middle mb-0">
@@ -212,7 +212,7 @@ if (empty($_SESSION['admin_logged'])) {
                 <div class="modal fade" id="modalWorker" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header"><h5 class="modal-title">Add Worker</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                            <div class="modal-header"><h5 class="modal-title">Add Employee</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                             <div class="modal-body">
                                 <div class="mb-3"><label class="form-label">Name</label><input class="form-control" id="workerName"></div>
                                 <div class="mb-3"><label class="form-label">Role</label><input class="form-control" id="workerRole"></div>
